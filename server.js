@@ -70,10 +70,16 @@ app.get('/', basicAuth, async (req, res) => {
 
 app.get('/generate-qr/:id', basicAuth, async (req, res) => {
     const qrId = req.params.id;
-    // Определяем URL в зависимости от окружения
-    const baseUrl = process.env.NODE_ENV === 'production'
-        ? `https://${process.env.RENDER_EXTERNAL_URL || 'lenovo-qr.onrender.com'}`
-        : 'http://localhost:3000';
+    // Определяем URL без дублирования протокола
+    let baseUrl;
+    if (process.env.NODE_ENV === 'production') {
+        baseUrl = process.env.RENDER_EXTERNAL_URL || 'lenovo-qr.onrender.com';
+        // Удаляем протокол, если он уже есть
+        baseUrl = baseUrl.replace(/^https?:\/\//, '');
+        baseUrl = `https://${baseUrl}`;
+    } else {
+        baseUrl = 'http://localhost:3000';
+    }
     const url = `${baseUrl}/claim/${qrId}`;
     try {
         const qrImage = await QRCode.toString(url, {
