@@ -3,6 +3,7 @@ const { createClient } = require('@supabase/supabase-js');
 const QRCode = require('qrcode');
 const dotenv = require('dotenv');
 const { v4: uuidv4 } = require('uuid');
+const ejs = require('ejs');
 
 dotenv.config();
 const app = express();
@@ -69,7 +70,11 @@ app.get('/', basicAuth, async (req, res) => {
 
 app.get('/generate-qr/:id', basicAuth, async (req, res) => {
     const qrId = req.params.id;
-    const url = `https://${process.env.VERCEL_URL || 'localhost:3000'}/claim/${qrId}`;
+    // Определяем URL в зависимости от окружения
+    const baseUrl = process.env.NODE_ENV === 'production'
+        ? `https://${process.env.RENDER_EXTERNAL_URL || 'lenovo-qr.onrender.com'}`
+        : 'http://localhost:3000';
+    const url = `${baseUrl}/claim/${qrId}`;
     try {
         const qrImage = await QRCode.toString(url, {
             type: 'svg',
