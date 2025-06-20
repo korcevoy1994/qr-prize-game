@@ -57,6 +57,10 @@ const initQRs = async () => {
 };
 initQRs();
 
+app.get('/', (req, res) => {
+    res.send('Hello from Lenovo QR Prize Game!');
+});
+
 app.get('/', basicAuth, async (req, res) => {
     const { data: qrCodes, error } = await supabase
         .from('qrcodes')
@@ -176,5 +180,5 @@ app.post('/claim/:qrId', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Сервер запущен на порту ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
