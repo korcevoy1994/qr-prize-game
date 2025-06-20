@@ -57,10 +57,6 @@ const initQRs = async () => {
 };
 initQRs();
 
-app.get('/', (req, res) => {
-    res.send('Hello from Lenovo QR Prize Game!');
-});
-
 app.get('/', basicAuth, async (req, res) => {
     const { data: qrCodes, error } = await supabase
         .from('qrcodes')
@@ -73,7 +69,7 @@ app.get('/', basicAuth, async (req, res) => {
 
 app.get('/generate-qr/:id', basicAuth, async (req, res) => {
     const qrId = req.params.id;
-    const url = `http://localhost:${process.env.PORT}/claim/${qrId}`;
+    const url = `https://${process.env.VERCEL_URL || 'localhost:3000'}/claim/${qrId}`;
     try {
         const qrImage = await QRCode.toString(url, {
             type: 'svg',
@@ -178,6 +174,7 @@ app.post('/claim/:qrId', async (req, res) => {
     }
 });
 
+// Прослушка порта
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
