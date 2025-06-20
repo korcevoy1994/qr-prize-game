@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lenovo Day '25 - Поздравляем!</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <img src="/lenovo-logo.svg" alt="Lenovo Logo" class="logo">
+    </header>
+    <div class="container">
+        <h1 class="animated-title">Lenovo Day '25</h1>
+        <p class="intro-text">Поздравляем! Вы выиграли приз!</p>
+        <form action="/claim/<%= qrId %>" method="POST" class="claim-form">
+            <label for="name">Введите ваше имя:</label>
+            <input type="text" id="name" name="name" required class="input-field">
+            <button type="submit" class="submit-btn">Отправить</button>
+        </form>
+    </div>
+</body>
+</html>

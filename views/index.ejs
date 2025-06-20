@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Prize Game</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>QR Prize Game</h1>
+    <div class="qr-links">
+        <% qrCodes.forEach(qr => { %>
+            <a href="/generate-qr/<%= qr.qr_id %>">Показать QR-код <%= qr.qr_id.slice(0, 8) %>...</a>
+        <% }) %>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ошибка</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <img src="/lenovo-logo.svg" alt="Lenovo Logo" class="logo">
+    </header>
+    <div class="container">
+        <h1 class="animated-title">Ошибка</h1>
+        <p><%= message %></p>
+        <% if (winner) { %>
+            <p>Победитель: <%= winner %></p>
+        <% } %>
+    </div>
+</body>
+</html>
